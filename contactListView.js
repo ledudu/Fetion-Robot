@@ -16,7 +16,7 @@ function contactView(id,callback) {
 		};
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
-						account.login('13422349864','QCX/7330507',function() {
+						account.login('','',function() {
 								contactView(id,callback);
 						});
 				} else {

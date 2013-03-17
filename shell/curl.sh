@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-curl -c ./cookie_c.txt -F m=13422349864 -F pass=QCX/7330507 'http://f.10086.cn/im5/login/loginHtml5.action?'
+curl -c ./cookie_c.txt -F m= -F pass= 'http://f.10086.cn/im5/login/loginHtml5.action?'
 echo
 echo
 curl -b ./cookie_c.txt 'http://f.10086.cn/im5/index/loadGroupContactsAjax.action?'
