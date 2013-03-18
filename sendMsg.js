@@ -1,25 +1,27 @@
 var http = require('http');
 var account = require('./account');
 
-function sendNewShortMsg(userId,msg,callback) {
-		var cookie = account.getCookie();
-		var body = 'touserid=' + userId + '&msg=' + msg;
+function setSendMsg(ctx) {
+		ctx.sendMsg = '(By fetion robot.)';
+		ctx.next();
+}
+
+function sendNewShortMsg(ctx) {
+		var body = 'touserid=' + ctx.userId + '&msg=' + ctx.sendMsg;
 		var headers = {
 				'Content-Length' : body.length,
 				'Content-Type' : 'application/x-www-form-urlencoded',
-				'Cookie' : cookie
+				'Cookie' : ctx.cookie
 		};
-		var option = {
+		var options = {
 				hostname: 'f.10086.cn',
-				path: '/im5/chat/sendNewMsg.action?' + 't=' + (new Date()).valueOf(),
+				path: '/im5/chat/sendNewShortMsg.action?' + 't=' + (new Date()).valueOf(),
 				headers: headers,
 				method: 'POST'
 		};
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
-					account.login('','',function() {
-							sendNewShortMsg(userId,msg,callback);
-					});
+						account.login(ctx);
 				} else {
 						var body = '';
 						response.setEncoding('utf8');
@@ -27,7 +29,7 @@ function sendNewShortMsg(userId,msg,callback) {
 								body += chunk;
 						});
 						response.on('end',function() {
-								(callback && typeof(callback) === 'function') && callback(JSON.parse(body));
+								console.log(JSON.parse(body));
 						});
 				}
 		});
@@ -38,10 +40,42 @@ function sendNewShortMsg(userId,msg,callback) {
 		request.end();
 }
 
-function sendNewMsg(userId,msg,callback) {
+function sendNewMsg(ctx) {
+		var body = 'touserid=' + ctx.userId + '&msg=' + 'monkey';
+		console.log(body);
+		var headers = {
+				'Content-Length' : body.length,
+				'Content-Type' : 'application/x-www-form-urlencoded',
+				'Cookie' : ctx.cookie
+		};
+		var options = {
+				hostname: 'f.10086.cn',
+				path: '/im5/chat/sendNewMsg.action?' + 't=' + (new Date()).valueOf(),
+				headers: headers,
+				method: 'POST'
+		};
+		var request = http.request(options,function(response) {
+				if(response.statusCode >= 300) {
+						account.login(ctx);
+				} else {
+						var body = '';
+						response.setEncoding('utf8');
+						response.on('data',function(chunk) {
+								body += chunk;
+						});
+						response.on('end',function() {
+								console.log(JSON.parse(body));
+						});
+				}
+		});
+		request.on('error',function(e) {
+				console.log('Problem with request:' + e);
+		});
+		request.write(body);
+		request.end();
 } 
 
-function sendNewGroupShortMsg(userIdList,msg,callback) {
+function sendNewGroupShortMsg(ctx) {
 }
 
 exports.sendNewShortMsg = sendNewShortMsg;

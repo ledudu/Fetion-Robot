@@ -1,10 +1,9 @@
 var http = require('http');
 var account = require('./account');
 
-function checkMsg(callback) {
-		var cookie = account.getCookie();
+function checkMsg(ctx) {
 		var headers = {
-				'Cookie': cookie,
+				'Cookie': ctx.cookie,
 				'Content-Length' : 0,
 				'Content-Type': 'application/json'
 		};
@@ -16,18 +15,21 @@ function checkMsg(callback) {
 		};
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
-						account.login('','',function() {
-								checkMsg(callback);
+						account.login(ctx.user,ctx.password,function() {
+								checkMsg(ctx);
 						});
 				} else {
-						console.log(response.headers);
 						var body = '';
 						response.setEncoding('utf8');
 						response.on('data',function(chunk) {	
 								body += chunk;
 						});
 						response.on('end',function() {
-								(callback && typeof(callback) === 'function') && callback(JSON.parse(body));
+								if(body != null && body != '') {
+										ctx.recvMsg = JSON.parse(body);
+										console.log(ctx);
+										ctx.next();
+								}
 						});
 				}
 		});

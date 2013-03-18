@@ -1,10 +1,8 @@
 var http = require('http');
 var parseToCookie = require('./parseToCookie');
 
-var cookie = '';
-
-function login(user,password,callback) {
-		var body = 'm=' + user + '&pass=' + password;
+function login(ctx) {
+		var body = 'm=' + ctx.user + '&pass=' + ctx.password;
 		var headers = {
 				'Content-Length': body.length,
 				'Content-Type':'application/x-www-form-urlencoded'
@@ -18,14 +16,14 @@ function login(user,password,callback) {
 		var request = http.request(options,function(response) {
 				var setCookie = response.headers['set-cookie'];
 				var body = '';
-				cookie = parseToCookie.getCookieString(setCookie);
+				ctx.cookie = parseToCookie.getCookieString(setCookie);
 				response.on('data',function(chunk) {
 						body += chunk;
 				});
 				response.on('end',function() {
 						var tip = JSON.parse(body)['tip'];
 						if(tip == '') {
-								(callback && typeof(callback) === 'function') && callback();
+								ctx.next();
 						} else {
 								console.log(tip);
 						}
@@ -38,9 +36,4 @@ function login(user,password,callback) {
 		request.end();
 }
 
-function getCookie() {
-		return cookie;
-}
-
 exports.login = login;
-exports.getCookie = getCookie;

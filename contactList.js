@@ -1,33 +1,43 @@
 var http = require('http');
 var account = require('./account');
 
-function groupContacts(callback) {
-		var cookie = account.getCookie();
+function contactView(ctx) {
 		var headers = {
-				'Cookie': cookie,
+				'Cookie': ctx.cookie,
 				'Content-Type':'application/json'
 		};
+		if(ctx.friendGroupIds.length == ctx.contactGroupList['total']) {
+				ctx.contactList = [];
+				ctx.contactsMap = {};
+				ctx.contactsArray = [];
+		}
+		if(ctx.friendGroupIds.length == 0) {
+				ctx.friendGroupIds = ctx.contactGroupList['friendGroupIds'].split(',');
+				ctx.next();
+				return;
+		}
+		var friendGroupId = ctx.friendGroupIds.shift();
 		var options = {
 				hostname: 'f.10086.cn',
-				path: '/im5/index/loadGroupContactsAjax.action?' + 't=' + (new Date()).valueOf(),
+				path: '/im5/index/contactlistView.action?idContactList=' + friendGroupId + '&t=' + (new Date()).valueOf(),
 				headers: headers,
 				method: 'GET'
 		};
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
-					account.login('','',function() {
-							groupContacts(callback);
-					});
-				} else {
-						var body = '';
-						response.setEncoding('utf8');
-						response.on('data',function(chunk) {
-								body += chunk;
-						});
-						response.on('end',function() {
-								(callback && typeof(callback) === 'function') && callback(JSON.parse(body));
-						});
+						account.login(ctx);
 				}
+				var body = '';
+				response.setEncoding('utf8');
+				response.on('data',function(chunk) {
+						body += chunk;
+				});
+				response.on('end',function() {
+						ctx.contactList[ctx.contactList.length] = JSON.parse(body);
+						ctx.contactsMap[friendGroupId] = ctx.contactList[ctx.contactList.length-1]['contacts'];
+						ctx.contactsArray = ctx.contactsArray.concat(ctx.contactsMap[friendGroupId]);
+						contactView(ctx);
+				});
 		});
 		request.on('error',function(e) {
 				console.log('Problem with request:' + e);
@@ -35,4 +45,4 @@ function groupContacts(callback) {
 		request.end();
 }
 
-exports.groupContacts = groupContacts;
+exports.contactView = contactView;
