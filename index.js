@@ -8,8 +8,8 @@ var checkMsg = require('./checkMsg');
 
 seqJobCtx.user = 'user';
 seqJobCtx.password = 'password';
-seqJobCtx.setCallbackArray([account.login,checkMsg.checkMsg]);
 
+checkMsg.checkMsgFrequently();
 /*seqJobCtx.setCallbackArray([account.login,contactGroupList.groupContacts,
 		contactList.contactView,chooseUser.chooseSingleUser,
 		sendMsg.setSendMsg,sendMsg.sendNewMsg]);

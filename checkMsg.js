@@ -1,11 +1,13 @@
 var http = require('http');
 var account = require('./account');
+var queryNewMsg = require('./queryNewMsg');
+var seqJobCtx = require('./seqJobCtx').seqJobCtx;
 
 function checkMsg(ctx) {
 		var headers = {
 				'Cookie': ctx.cookie,
 				'Content-Length' : 0,
-				'Content-Type': 'application/json'
+				'Connection': 'keep-alive'
 		};
 		var options = {
 				hostname: 'f.10086.cn',
@@ -15,9 +17,7 @@ function checkMsg(ctx) {
 		};
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
-						account.login(ctx.user,ctx.password,function() {
-								checkMsg(ctx);
-						});
+						account.login(ctx);
 				} else {
 						var body = '';
 						response.setEncoding('utf8');
@@ -27,7 +27,12 @@ function checkMsg(ctx) {
 						response.on('end',function() {
 								if(body != null && body != '') {
 										ctx.recvMsg = JSON.parse(body);
-										console.log(ctx);
+										var chatMsgList = ctx.recvMsg['chat_messages'];
+										chatMsgList.forEach(function(chatMsg) {
+												console.log(chatMsg['sendTime'] + '\t\t' + 
+														chatMsg['fromNickname'] + ':\t' + chatMsg['message']);
+												queryNewMsg.query(ctx,chatMsg['idMessage']);
+										});
 										ctx.next();
 								}
 						});
@@ -41,7 +46,7 @@ function checkMsg(ctx) {
 
 function checkMsgFrequently() {
 		setInterval(function(){
-				checkMsg(cookie);
+				checkMsg(seqJobCtx);
 		},15000);
 }
 

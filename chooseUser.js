@@ -16,7 +16,7 @@ function findIdFetionByPhoneNumber(ctx,number) {
 }
 
 function chooseSingleUser(ctx) {
-		findIdFetionByPhoneNumber(ctx,'18825166251');
+		findIdFetionByPhoneNumber(ctx,'15914225549');
 }
 
 exports.findIdFetionByPhoneNumber = findIdFetionByPhoneNumber;

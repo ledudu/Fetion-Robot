@@ -2,9 +2,10 @@ var http = require('http');
 var parseToCookie = require('./parseToCookie');
 
 function login(ctx) {
-		var body = 'm=' + ctx.user + '&pass=' + ctx.password;
+		var body = 'm=' + ctx.user + '&pass=' + ctx.password + '&captchaCode=&checkCodeKey=null';
 		var headers = {
 				'Content-Length': body.length,
+				'Connection': 'keep-alive',
 				'Content-Type':'application/x-www-form-urlencoded'
 		};
 		var options = {

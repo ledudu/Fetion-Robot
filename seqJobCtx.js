@@ -12,7 +12,7 @@ exports.seqJobCtx = new function() {
 		this.userIdList = null;
 		this.sendMsg = null;
 		this.recvMsg = null;
-		this.callbackArray = null;
+		this.callbackArray = [];
 
 		this.setCallbackArray = function(callbackArray) {
 				this.callbackArray = callbackArray;

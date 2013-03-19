@@ -4,7 +4,7 @@ var account = require('./account');
 function contactView(ctx) {
 		var headers = {
 				'Cookie': ctx.cookie,
-				'Content-Type':'application/json'
+				'Connection': 'keep-alive'
 		};
 		if(ctx.friendGroupIds.length == ctx.contactGroupList['total']) {
 				ctx.contactList = [];
@@ -19,7 +19,8 @@ function contactView(ctx) {
 		var friendGroupId = ctx.friendGroupIds.shift();
 		var options = {
 				hostname: 'f.10086.cn',
-				path: '/im5/index/contactlistView.action?idContactList=' + friendGroupId + '&t=' + (new Date()).valueOf(),
+				path: '/im5/index/contactlistView.action?idContactList=' + friendGroupId + '&t=' + (new Date()).valueOf() +
+						'&_=' + (new Date()).valueOf(),
 				headers: headers,
 				method: 'GET'
 		};

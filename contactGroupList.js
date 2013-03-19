@@ -4,11 +4,12 @@ var account = require('./account');
 function groupContacts(ctx) {
 		var headers = {
 				'Cookie': ctx.cookie,
-				'Content-Type':'application/json'
+				'Connection': 'keep-alive'
 		};
 		var options = {
 				hostname: 'f.10086.cn',
-				path: '/im5/index/loadGroupContactsAjax.action?' + 't=' + (new Date()).valueOf(),
+				path: '/im5/index/loadGroupContactsAjax.action?' + 't=' + (new Date()).valueOf() + 
+						'&_=' + (new Date()).valueOf(),
 				headers: headers,
 				method: 'GET'
 		};
