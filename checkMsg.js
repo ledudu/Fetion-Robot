@@ -28,12 +28,14 @@ function checkMsg(ctx) {
 								if(body != null && body != '') {
 										ctx.recvMsg = JSON.parse(body);
 										var chatMsgList = ctx.recvMsg['chat_messages'];
-										chatMsgList.forEach(function(chatMsg) {
-												console.log(chatMsg['sendTime'] + '\t\t' + 
-														chatMsg['fromNickname'] + ':\t' + chatMsg['message']);
-												queryNewMsg.query(ctx,chatMsg['idMessage']);
-										});
-										ctx.next();
+										if(chatMsgList != null) {
+												chatMsgList.forEach(function(chatMsg) {
+														console.log(chatMsg['sendTime'] + '\t\t' + 
+																chatMsg['fromNickname'] + ':\t' + chatMsg['message']);
+														queryNewMsg.query(ctx,chatMsg['idMessage']);
+												});
+												ctx.next();
+										}
 								}
 						});
 				}

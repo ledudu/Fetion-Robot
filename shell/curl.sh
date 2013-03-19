@@ -35,10 +35,10 @@ echo
 curl -b ./cookie_c.txt -F touserid=525889450 -F msg='发到手机' 'http://f.10086.cn/im5/chat/sendNewShortMsg.action'
 echo 
 echo
-#curl -b ./cookie_c.txt -F touserid=505255871 -F msg=哈哈，发现特定url用途 'http://f.10086.cn/im5/chat/sendNewShortMsg.action?'
+#curl -b ./cookie_c.txt -F touserid=505255871 -F msg=哈哈 'http://f.10086.cn/im5/chat/sendNewShortMsg.action?'
 echo 
 echo
-#curl -b ./cookie_c.txt -F touserid=525889450,505255871 -F msg=原来如此 'http://f.10086.cn/im5/chat/sendNewGroupShortMsg.action?'
+#curl -b ./cookie_c.txt -F touserid=525889450,505255871 -F msg=哈哈 'http://f.10086.cn/im5/chat/sendNewGroupShortMsg.action?'
 echo 
 echo
 
