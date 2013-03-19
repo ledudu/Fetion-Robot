@@ -1,1 +1,0 @@
-var contactList = require('./contactList');
