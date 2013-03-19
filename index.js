@@ -6,8 +6,8 @@ var chooseUser = require('./chooseUser');
 var sendMsg = require('./sendMsg');
 var checkMsg = require('./checkMsg');
 
-seqJobCtx.user = '13422349864';
-seqJobCtx.password = 'QCX/7330507';
+seqJobCtx.user = 'user';
+seqJobCtx.password = 'password';
 
 checkMsg.checkMsgFrequently();
 /*seqJobCtx.setCallbackArray([account.login,contactGroupList.groupContacts,
