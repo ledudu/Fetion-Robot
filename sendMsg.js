@@ -42,8 +42,8 @@ function sendNewShortMsg(ctx) {
 }
 
 function sendNewMsg(ctx) {
-		ctx.sendMsg = encodeURI('%E7%8C%B4%E5%AD%90');
-		var body = 'touserid=' + ctx.userId + '&msg=' + ctx.sendMsg;
+		ctx.sendMsg = '悠嘻猴';
+		var body = 'touserid=' + ctx.userId + '&msg=' + encodeURI(ctx.sendMsg);
 		var headers = {
 				'Content-Length' : body.length,
 				'Content-Type' : 'application/x-www-form-urlencoded',

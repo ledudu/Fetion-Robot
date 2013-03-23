@@ -1,5 +1,7 @@
 var http = require('http');
 var account = require('./account');
+var contactList = require('./contactList');
+var seqJobCtx = require('./seqJobCtx').seqJobCtx;
 
 function groupContacts(ctx) {
 		var headers = {
@@ -27,7 +29,7 @@ function groupContacts(ctx) {
 								ctx.contactGroupList = JSON.parse(body);
 								ctx.contactGroup = ctx.contactGroupList['contacts'];
 								ctx.friendGroupIds = ctx.contactGroupList['friendGroupIds'].split(',');
-								ctx.next();
+								contactList.contactView(ctx);
 						});
 				}
 		});
@@ -37,4 +39,11 @@ function groupContacts(ctx) {
 		request.end();
 }
 
+function groupContactsFrequently() {
+		setInterval(function() {
+				groupContacts(seqJobCtx);
+		},60000);
+}
+
 exports.groupContacts = groupContacts;
+exports.groupContactsFrequently = groupContactsFrequently;
