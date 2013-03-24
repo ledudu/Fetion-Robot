@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-curl -c ./cookie_c.txt -F m= -F pass= 'http://f.10086.cn/im5/login/loginHtml5.action?'
+curl -c ./cookie_c.txt -F m='user' -F pass='password' 'http://f.10086.cn/im5/login/loginHtml5.action?'
 echo
 echo
 curl -b ./cookie_c.txt 'http://f.10086.cn/im5/index/loadGroupContactsAjax.action?'
@@ -47,8 +47,5 @@ curl -b ./cookie_c.txt 'http://f.10086.cn/im5/box/alllist.action?'
 echo 
 echo
 #curl -b ./cookie_c.txt 'http://f.10086.cn/im5/chat/queryNewMsg.action?idMsgs=24014590'
-echo 
-echo
-#curl -b ./cookie_c.txt http://f.10086.cn/im5/chat/queryNewMsg.action?t=1362659935223&_=1362659935223&idMsgs=24014590&t=1362659935223
 echo 
 echo

@@ -18,7 +18,6 @@ function groupContacts(ctx) {
 		var request = http.request(options,function(response) {
 				if(response.statusCode >= 300) {
 						account.login(ctx);
-						groupContacts(ctx);
 				} else {
 						var body = '';
 						response.setEncoding('utf8');
