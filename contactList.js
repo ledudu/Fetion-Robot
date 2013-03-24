@@ -13,6 +13,7 @@ function contactView(ctx) {
 		}
 		if(ctx.friendGroupIds.length == 0) {
 				ctx.friendGroupIds = ctx.contactGroupList['friendGroupIds'].split(',');
+				console.log('You can send message.');
 				ctx.next();
 				return;
 		}

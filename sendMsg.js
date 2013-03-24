@@ -7,6 +7,7 @@ function setSendMsg(ctx) {
 }
 
 function sendNewShortMsg(ctx) {
+		ctx.sendMsg = '悠嘻猴yoxi!';
 		var body = 'touserid=' + ctx.userId + '&msg=' + encodeURI(ctx.sendMsg);
 		var headers = {
 				'Content-Length' : body.length,
@@ -42,7 +43,7 @@ function sendNewShortMsg(ctx) {
 }
 
 function sendNewMsg(ctx) {
-		ctx.sendMsg = '悠嘻猴';
+		ctx.sendMsg = '悠嘻猴yoxi!';
 		var body = 'touserid=' + ctx.userId + '&msg=' + encodeURI(ctx.sendMsg);
 		var headers = {
 				'Content-Length' : body.length,
@@ -77,6 +78,7 @@ function sendNewMsg(ctx) {
 } 
 
 function sendNewGroupShortMsg(ctx) {
+		ctx.sendMsg = '悠嘻猴yoxi!';
 		var idList = '';
 		for(var i = 0; i < ctx.userIdList.length ; ++i) {
 				idList += ',' + ctx.userIdList[i];
@@ -89,7 +91,7 @@ function sendNewGroupShortMsg(ctx) {
 		};
 		var options = {
 				hostname: 'f.10086.cn',
-				path: '/im5/chat/sendGroupShortMsg.action?' + 't=' + (new Date()).valueOf(),
+				path: '/im5/chat/sendNewGroupShortMsg.action?' + 't=' + (new Date()).valueOf(),
 				headers: headers,
 				method: 'POST'
 		};

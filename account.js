@@ -37,4 +37,25 @@ function login(ctx) {
 		request.end();
 }
 
+function logout(ctx) {
+		var headers = {
+				'Cookie': ctx.cookie,
+				'Connection': 'keep-alive'
+		};
+		var options = {
+				hostname: 'f.10086.cn',
+				path: '/im5/login/login.action?type=logout',
+				headers: headers,
+				method: 'GET'
+		};
+		var request = http.request(options,function(response) {
+				console.log('Successfully logout.');
+		});
+		request.on('error',function(e) {
+				console.log('Problem with request:' + e);
+		});
+		request.end();
+}
+
 exports.login = login;
+exports.logout = logout;

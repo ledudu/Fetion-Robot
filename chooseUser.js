@@ -6,6 +6,7 @@ function findIdFetionByPhoneNumber(ctx,number) {
 				--count;
 				if(contact['mobileNo'] == number) {
 						ctx.userId = contact['idContact'];
+						console.log(ctx.userId);
 						ctx.next();
 						return;
 				}
@@ -16,6 +17,7 @@ function findIdFetionByPhoneNumber(ctx,number) {
 }
 
 function findIdsByNumbers(ctx,numList) {
+		console.log('call');
 		var count = ctx.contactsArray.length;
 		ctx.userIdList = [];
 		ctx.contactsArray.forEach(function(contact) {
@@ -23,17 +25,19 @@ function findIdsByNumbers(ctx,numList) {
 				numList.forEach(function(number) {
 						if(contact['mobileNo'] == number) {
 								ctx.userIdList[ctx.userIdList.length] = contact['idContact'];
-								numList.remove(number);
+								var idx = numList.indexOf(number);
+								numList.splice(idx,1);
 						}
 				});
 				if(numList.length == 0 || count == 0) {
 						ctx.next();
+						return;
 				}
 		});
 }
 
 function chooseSingleUser(ctx) {
-		findIdFetionByPhoneNumber(ctx,'18825166251');
+		findIdFetionByPhoneNumber(ctx,'15914225549');
 }
 
 function chooseUsers(ctx) {
@@ -41,4 +45,6 @@ function chooseUsers(ctx) {
 }
 
 exports.findIdFetionByPhoneNumber = findIdFetionByPhoneNumber;
+exports.findIdsByNumbers = findIdsByNumbers;
 exports.chooseSingleUser = chooseSingleUser;
+exports.chooseUsers = chooseUsers;
