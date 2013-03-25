@@ -2,12 +2,11 @@ var http = require('http');
 var account = require('./account');
 
 function setSendMsg(ctx) {
-		ctx.sendMsg = '(By fetion robot.)';
+		ctx.sendMsg = '悠嘻猴yoxi!(By fetion robot.)';
 		ctx.next();
 }
 
 function sendNewShortMsg(ctx) {
-		ctx.sendMsg = '悠嘻猴yoxi!';
 		var body = 'touserid=' + ctx.userId + '&msg=' + encodeURI(ctx.sendMsg);
 		var headers = {
 				'Content-Length' : body.length,
@@ -22,6 +21,7 @@ function sendNewShortMsg(ctx) {
 				method: 'POST'
 		};
 		var request = http.request(options,function(response) {
+				console.log(response.statusCode);
 				if(response.statusCode >= 300) {
 						account.login(ctx);
 				} else {
@@ -43,7 +43,6 @@ function sendNewShortMsg(ctx) {
 }
 
 function sendNewMsg(ctx) {
-		ctx.sendMsg = '悠嘻猴yoxi!';
 		var body = 'touserid=' + ctx.userId + '&msg=' + encodeURI(ctx.sendMsg);
 		var headers = {
 				'Content-Length' : body.length,
@@ -69,8 +68,8 @@ function sendNewMsg(ctx) {
 								console.log(JSON.parse(body));
 						});
 				}
-		});
-		request.on('error',function(e) {
+		}); 
+		request.on('error',function(e) { 
 				console.log('Problem with request:' + e);
 		});
 		request.write(body);
@@ -78,7 +77,6 @@ function sendNewMsg(ctx) {
 } 
 
 function sendNewGroupShortMsg(ctx) {
-		ctx.sendMsg = '悠嘻猴yoxi!';
 		var idList = '';
 		for(var i = 0; i < ctx.userIdList.length ; ++i) {
 				idList += ',' + ctx.userIdList[i];
@@ -116,6 +114,7 @@ function sendNewGroupShortMsg(ctx) {
 		request.end();
 }
 
+exports.setSendMsg = setSendMsg;
 exports.sendNewShortMsg = sendNewShortMsg;
 exports.sendNewMsg = sendNewMsg;
 exports.sendNewGroupShortMsg = sendNewGroupShortMsg;

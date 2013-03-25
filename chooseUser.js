@@ -37,7 +37,7 @@ function findIdsByNumbers(ctx,numList) {
 }
 
 function chooseSingleUser(ctx) {
-		findIdFetionByPhoneNumber(ctx,'15914225549');
+		findIdFetionByPhoneNumber(ctx,'13422349864');
 }
 
 function chooseUsers(ctx) {
